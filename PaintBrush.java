@@ -147,13 +147,14 @@ public class PaintBrush extends Applet{
 		solidBox.addItemListener(new ItemListener(){
 				public void itemStateChanged(ItemEvent e){
 					int state = e.getStateChange();
-					if(state == e.SELECTED){
+					if(state == ItemEvent.SELECTED){
 						isSolid = true;
-					}else if(state == e.DESELECTED){
+					}else if(state == ItemEvent.DESELECTED){
 						isSolid = false;
 					}
 				}
 		});
+
 		/*  ---------- Mouse Listeners added ---------- */
 		
 		addMouseListener(new MyMouseListener());
@@ -169,15 +170,16 @@ public class PaintBrush extends Applet{
 				x2 = e.getX();
 				y2 = e.getY();
 				
+				// Pencil effect
 				if(shapeType == PENCIL){
 					Line l = new Line(new Point(x1, y1), new Point(x2, y2), mainColor);
 					shapesList.add(l);
 					// connecting between lines
 					x1 = x2;
-					y1 = y2;
-					
-				}else if(shapeType == ERASER){
-					
+					y1 = y2;	
+				}
+				// ERASER effect
+				else if(shapeType == ERASER){
 					int upperLX = Math.min(x1, x2);
                     int upperLY = Math.min(y1, y2);
                     int rectWidth = Math.abs(x2 - x1);
@@ -190,12 +192,10 @@ public class PaintBrush extends Applet{
 					x1 = x2;
 					y1 = y2;
 				}
-				
 				repaint();
 			}
 
 		}
-		
 		
 		public void mousePressed(MouseEvent e){
 			if(shapeType != IDLE){
@@ -232,6 +232,7 @@ public class PaintBrush extends Applet{
 	
 	public void paint(Graphics g){
 		
+		// clear the applet
 		if(isCleared){
 			//g.setColor(Color.WHITE);
 			//g.fillRect(0, 0, getWidth(), getHeight());
@@ -240,6 +241,7 @@ public class PaintBrush extends Applet{
 			isCleared = false;
 		}
 
+		/* Painting the whole shapes list everytime */
 		for(Shape s: shapesList){
 			s.draw(g);
 		}
