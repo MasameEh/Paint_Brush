@@ -35,12 +35,17 @@ public class PaintBrush extends Applet{
 	private Color mainColor = Color.BLACK;
 	private boolean isSolid = false;
 	private boolean isCleared = false;
+	private boolean isDragging = false;
+	
 	
 	public void init(){
 		shapeType = IDLE;
 		
 		Button clearBtn = new Button("Clear");
+		Button undoBtn = new Button("Undo");
+		
 		add(clearBtn);
+		add(undoBtn);
 		
 		clearBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -48,7 +53,7 @@ public class PaintBrush extends Applet{
 				repaint();
 			}
 		});
-		
+				
 		/*  ---------- Shape Buttons  ---------- */
 		
 		Label shapesLabel = new Label("Paint mode: ");
@@ -58,6 +63,7 @@ public class PaintBrush extends Applet{
 		Button ovalBtn = new Button("Oval");
 		Button penBtn = new Button("Pencil");
 		Button eraserBtn = new Button("Eraser");
+		
 		
 		add(shapesLabel);
 		add(lineBtn);
@@ -156,9 +162,9 @@ public class PaintBrush extends Applet{
 		});
 
 		/*  ---------- Mouse Listeners added ---------- */
-		
-		addMouseListener(new MyMouseListener());
-		addMouseMotionListener(new MyMouseListener());
+		MyMouseListener myMouse = new MyMouseListener();
+		addMouseListener(myMouse);
+		addMouseMotionListener(myMouse);
     }
 	
 	/*  ---------- Mouse Listeners Imp ---------- */
@@ -167,6 +173,7 @@ public class PaintBrush extends Applet{
 	
 		public void mouseDragged(MouseEvent e){
 			if(shapeType != IDLE){
+				isDragging = true;
 				x2 = e.getX();
 				y2 = e.getY();
 				
@@ -182,10 +189,8 @@ public class PaintBrush extends Applet{
 				else if(shapeType == ERASER){
 					int upperLX = Math.min(x1, x2);
                     int upperLY = Math.min(y1, y2);
-                    int rectWidth = Math.abs(x2 - x1);
-                    int rectHeight = Math.abs(y2 - y1);
-					
-					Rectangle r = new Rectangle(new Point(upperLX, upperLY), rectWidth, rectHeight, Color.WHITE, true);
+
+					Rectangle r = new Rectangle(new Point(upperLX, upperLY), 20, 20, Color.WHITE, true);
 					
 					shapesList.add(r);
 					// connecting between the recangles
@@ -205,7 +210,7 @@ public class PaintBrush extends Applet{
 		}
 		public void mouseReleased(MouseEvent e){
 			// finish dragging then add the shape
-			if(shapeType != IDLE){
+			if(shapeType != IDLE && isDragging){
 				
 				Point topLeft = new Point(Math.min(x1, x2), Math.min(y1, y2));
                 int width = Math.abs(x2 - x1);
@@ -222,6 +227,7 @@ public class PaintBrush extends Applet{
                         shapesList.add(new Oval(topLeft, width, height, mainColor, isSolid));
                         break;
 				}
+				isDragging = false;
 				repaint();
 			}
  
