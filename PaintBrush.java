@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Checkbox;
+import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
@@ -44,6 +45,15 @@ public class PaintBrush extends Applet{
 		Button clearBtn = new Button("Clear");
 		Button undoBtn = new Button("Undo");
 		
+		Font buttonFont = new Font("Arial", Font.BOLD, 14);
+		
+		clearBtn.setBackground(Color.LIGHT_GRAY);
+		clearBtn.setForeground(Color.BLACK);
+		undoBtn.setBackground(Color.LIGHT_GRAY);
+		undoBtn.setForeground(Color.BLACK);
+		clearBtn.setFont(buttonFont);
+		undoBtn.setFont(buttonFont);
+		
 		add(clearBtn);
 		add(undoBtn);
 		
@@ -63,6 +73,28 @@ public class PaintBrush extends Applet{
 		Button ovalBtn = new Button("Oval");
 		Button penBtn = new Button("Pencil");
 		Button eraserBtn = new Button("Eraser");
+		
+		lineBtn.setBackground(Color.LIGHT_GRAY);
+		lineBtn.setForeground(Color.BLACK);
+		rectBtn.setBackground(Color.LIGHT_GRAY);
+		rectBtn.setForeground(Color.BLACK);
+		ovalBtn.setBackground(Color.LIGHT_GRAY);
+		ovalBtn.setForeground(Color.BLACK);
+		
+		penBtn.setBackground(Color.LIGHT_GRAY);
+		penBtn.setForeground(Color.BLACK);
+		eraserBtn.setForeground(Color.BLACK);
+		eraserBtn.setBackground(Color.LIGHT_GRAY);
+		
+	
+		lineBtn.setFont(buttonFont);
+		rectBtn.setFont(buttonFont);
+		ovalBtn.setFont(buttonFont);
+		penBtn.setFont(buttonFont);
+		eraserBtn.setFont(buttonFont);
+
+		
+		setBackground(Color.WHITE);
 		
 		
 		add(shapesLabel);
@@ -235,7 +267,9 @@ public class PaintBrush extends Applet{
 		}
 
 	}
-	
+		/*  ---------- end of Mouse Listeners Imp ---------- */
+		
+		/*  ---------- start of painting ---------- */
 	public void paint(Graphics g){
 		
 		// clear the applet
@@ -294,6 +328,7 @@ public class PaintBrush extends Applet{
 		
 }	
 
+/* Classes used */
 
 abstract class Shape{
 	
